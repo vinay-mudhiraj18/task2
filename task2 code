@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mini Web Project</title>
+  <style>
+    /* General Styles */
+    body {
+     background-image: url("https://th.bing.com/th/id/R.f7dded89d18d3895423761d243aed4c3?rik=RCKDoOy423MVxA&riu=http%3a%2f%2fgetwallpapers.com%2fwallpaper%2ffull%2f0%2f6%2f6%2f527310.jpg&ehk=%2bcs69fisEmVMepj5t%2f3KWGmlgHiXsXD3jOJexFCzlDo%3d&risl=&pid=ImgRaw&r=0");
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      
+    }
+
+    header, footer {
+      background-color: #2c2b2b;
+      color: white;
+      text-align: center;
+      padding: 1em;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    /* Contact Form Styles */
+    form {
+      display: flex;
+      color: #e4d7d7;
+      flex-direction: column;
+      gap: 10px;
+      background-image: url("https://images.freecreatives.com/wp-content/uploads/2016/04/Awesome-Website-Background1.jpg");
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    input, button {
+      padding: 10px;
+      font-size: 1em;
+    }
+
+    .error {
+      color: rgb(0, 0, 0);
+      font-size: 0.9em;
+    }
+
+    /* To-Do List Styles */
+    .todo {
+      background: #f1f1f1;
+      padding: 20px;
+      border-radius: 8px;
+      color: rgb(0, 0, 0);
+      background-image: url("https://wallpaperaccess.com/full/5361112.jpg");
+    }
+
+    .todo input[type="text"] {
+      width: 70%;
+    }
+
+    .task {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      background: #aee5f3;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .task button {
+      background: red;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 3px;
+    }
+
+    /* Responsive Layout */
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>task2</h1>
+  </header>
+
+  <div class="container">
+    <!-- Contact Form -->
+    <form id="contactForm">
+      <h2>Contact Form</h2>
+      <input type="text" id="name" placeholder="Your Name" required />
+      <input type="email" id="email" placeholder="Your Email" required />
+      <div class="error" id="formError"></div>
+      <button type="submit">Submit</button>
+    </form>
+
+    <!-- To-Do List -->
+    <div class="todo">
+      <h2>To-Do List</h2>
+      <input type="text" id="taskInput" placeholder="Enter a task" />
+      <button onclick="addTask()">Add Task</button>
+      <div id="taskList"></div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 Web Project
+  </footer>
+
+  <script>
+    // Form Validation
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const errorDiv = document.getElementById('formError');
+      errorDiv.textContent = '';
+
+      if (name === '' || email === '') {
+        errorDiv.textContent = 'Please fill in all fields.';
+        return;
+      }
+
+      const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+      if (!emailRegex.test(email)) {
+        errorDiv.textContent = 'Please enter a valid email.';
+        return;
+      }
+
+      alert('Form submitted successfully!');
+      document.getElementById('contactForm').reset();
+    });
+
+    // To-Do List Logic
+    function addTask() {
+      const input = document.getElementById('taskInput');
+      const taskText = input.value.trim();
+      if (taskText === '') return;
+
+      const taskList = document.getElementById('taskList');
+
+      const taskDiv = document.createElement('div');
+      taskDiv.className = 'task';
+      taskDiv.innerHTML = `
+        <span>${taskText}</span>
+        <button onclick="this.parentElement.remove()">Delete</button>
+      `;
+
+      taskList.appendChild(taskDiv);
+      input.value = '';
+    }
+  </script>
+</body>
+</html>
